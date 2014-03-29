@@ -1,8 +1,8 @@
 package {{$name}};
 
 use 5.008001;
-use warnings;
 use strict;
+use warnings;
 use Carp;
 use English qw( -no_match_vars );
 
@@ -15,12 +15,11 @@ use English qw( -no_match_vars );
 #  use Moose;
 
 our $VERSION = '0.001';
-$VERSION =~ s/_//sm;
-
 
 # Module implementation here
 
-
+#__PACKAGE__->meta->make_immutable;
+#no Moose;
 1; # Magic true value required at end of module
 __END__
 
@@ -48,20 +47,20 @@ This document describes {{$name}} version 0.001
 
 To install this module, run the following commands:
 
-	perl Makefile.PL
-	make
-	make test
-	make install
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 This method of installation will require a current version of Module::Build 
 if it is not already installed.
     
 Alternatively, to install with Module::Build, you can use the following commands:
 
-	perl Build.PL
-	./Build
-	./Build test
-	./Build install
+    perl Build.PL
+    ./Build
+    ./Build test
+    ./Build install
 
 =end readme
 
@@ -179,10 +178,10 @@ if you have an account there.
     } else {
         $license = "=$license";
     }
-	if ($license =~ /Perl_5/) {
-		$email = $dist->stash_named('%User')->email;
-		$copyright_holder = $dist->copyright_holder;
-		$notice = <<"EON";
+    if ($license =~ /Perl_5/) {
+        $email = $dist->stash_named('%User')->email;
+        $copyright_holder = $dist->copyright_holder;
+        $notice = <<"EON";
 Copyright (c) $copyright_year, $copyright_holder C<< $email >>.
 
 This module is free software; you can redistribute it and/or
@@ -193,10 +192,10 @@ and L<perlgpl|perlgpl>.
 The full text of the license can be found in the
 LICENSE file included with this module.
 EON
-	chomp $notice;
-	} else {
-		$notice = $dist->license->notice;
-	} 
+    chomp $notice;
+    } else {
+        $notice = $dist->license->notice;
+    } 
     '';
 }}{{$authors}}
 

@@ -10,5 +10,7 @@ glob:MANIFEST
 Makefile.PL
 META.yml
 MYMETA.yml
+META.json
+MYMETA.json
 glob:*.bak
 

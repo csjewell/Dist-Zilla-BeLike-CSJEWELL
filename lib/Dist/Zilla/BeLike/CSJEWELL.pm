@@ -4,9 +4,7 @@ use 5.008003;
 use warnings;
 use strict;
 
-our $VERSION = '0.901';
-$VERSION =~ s/_//sm;
-
+our $VERSION = '0.990';
 
 # Documentation module only.
 
@@ -17,7 +15,7 @@ __END__
 
 =begin readme text
 
-Dist::Zilla::BeLike::CSJEWELL version 0.901
+Dist::Zilla::BeLike::CSJEWELL version 0.990
 
 =end readme
 
@@ -37,20 +35,20 @@ This document describes Dist::Zilla::BeLike::CSJEWELL version 0.901.
 
 To install this module, run the following commands:
 
-	perl Makefile.PL
-	make
-	make test
-	make install
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 This method of installation will require a current version of Module::Build 
 if it is not already installed.
     
 Alternatively, to install with Module::Build, you can use the following commands:
 
-	perl Build.PL
-	./Build
-	./Build test
-	./Build install
+    perl Build.PL
+    ./Build
+    ./Build test
+    ./Build install
 
 =end readme
 
@@ -58,11 +56,11 @@ Alternatively, to install with Module::Build, you can use the following commands
 
 =head1 SYNOPSIS
 
-	# After 'dzil setup'
-	dzil configure_CSJEWELL
-	
-	# To create a module
-	dzil new -P CSJEWELL Your::Module
+    # After 'dzil setup'
+    dzil configure_CSJEWELL
+    
+    # To create a module
+    dzil new -P CSJEWELL Your::Module
 
 =head1 DESCRIPTION
 

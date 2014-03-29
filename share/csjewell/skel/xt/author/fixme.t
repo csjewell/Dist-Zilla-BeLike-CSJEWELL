@@ -5,31 +5,31 @@
 use strict;
 
 BEGIN {
-	use English qw(-no_match_vars);
-	$OUTPUT_AUTOFLUSH = 1;
-	$WARNING = 1;
+    use English qw(-no_match_vars);
+    $OUTPUT_AUTOFLUSH = 1;
+    $WARNING = 1;
 }
 
 my @MODULES = (
-	'Test::Fixme 0.04',
+    'Test::Fixme 0.04',
 );
 
 # Load the testing modules
 use Test::More;
 foreach my $MODULE ( @MODULES ) {
-	eval "use $MODULE";
-	if ( $EVAL_ERROR ) {
-		BAIL_OUT( "Failed to load required release-testing module $MODULE" );
-	}
+    eval "use $MODULE";
+    if ( $EVAL_ERROR ) {
+        BAIL_OUT( "Failed to load required release-testing module $MODULE" );
+    }
 }
 
 # To make this a todo test, remove the comments below, and the spaces
 # between TO and DO in the next two lines.
 #TO DO: {
-#	local $TO DO = 'All modules are going to be fixed.';
+#    local $TO DO = 'All modules are going to be fixed.';
 
-	run_tests(
-		match    => 'TO' . 'DO',                # what to check for
-	);
+    run_tests(
+        match    => 'TO' . 'DO',                # what to check for
+    );
 #}
 

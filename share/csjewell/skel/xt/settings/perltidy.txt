@@ -1,8 +1,6 @@
---backup-and-modify-in-place
 --warning-output
 --maximum-line-length=76
 --indent-columns=4
---entab-leading-whitespace=4
 # --check-syntax
 # -perl-syntax-check-flags=-c
 --continuation-indentation=2

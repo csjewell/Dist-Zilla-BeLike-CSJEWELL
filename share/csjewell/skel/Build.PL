@@ -3,8 +3,8 @@ use warnings;
 use Module::Build;
 
 my $class = Module::Build->subclass(
-	class => 'My::Builder',
-	code  => <<'END_CODE',
+    class => 'My::Builder',
+    code  => <<'END_CODE',
 sub ACTION_authortest {
     my ($self) = @_;
 
@@ -43,19 +43,19 @@ sub ACTION_manifest {
 
 sub ACTION_distmeta {
     my ($self) = @_;
-	
+
     $self->depends_on('manifest');
-	
+
     return $self->SUPER::ACTION_distmeta();
 }
 END_CODE
 );
 {{
-	$dist_module = join('::', split(/-/, $dist->name));
-	$authors_list = join( q{' '}, @{$dist->authors} );
-	$repository = $dist->stash_named('%DefaultURLs')->repository_location . lc $dist->name;
-	$homepage = $dist->stash_named('%DefaultURLs')->homepage;	
-	'';
+    $dist_module = join('::', split(/-/, $dist->name));
+    $authors_list = join( q{' '}, @{$dist->authors} );
+    $repository = $dist->stash_named('%DefaultURLs')->repository_location . lc $dist->name;
+    $homepage = $dist->stash_named('%DefaultURLs')->homepage;
+    '';
 }}
 
 my $builder = $class->new(
@@ -63,20 +63,21 @@ my $builder = $class->new(
     license                  => '{{$dist->license->meta_name}}',
     dist_author              => [ '{{$authors_list}}' ],
     dist_version_from        => '{{$dist->main_module->name}}',
-	create_readme            => 1,
-	create_license           => 1,
-	create_makefile_pl       => 'small',
-	configure_requires       => {
-        'Module::Build'      => '0.33',
-	},
+    create_readme            => 1,
+    create_license           => 1,
+    create_makefile_pl       => 'small',
+    release_status           => 'unstable',
+    configure_requires       => {
+        'Module::Build'      => '0.3614',
+    },
     requires => {
-        'perl'                => '5.008001',	
+        'perl'                => '5.008001',
 #        'parent'              => '0.221',
 #        'Exception::Class'    => '1.29',
     },
-	build_requires => {
+    build_requires => {
         'Test::More'          => '0.88',
-	},
+    },
     meta_merge     => {
         resources => {
             homepage    => '{{$homepage}}',

@@ -5,23 +5,21 @@ use Moose;
 use Module::Build;
 with 'Dist::Zilla::Role::TestRunner';
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
-
+our $VERSION = '0.990';
 
 sub test {
-	my ( $self, $test_dir ) = @_;
+    my ( $self, $test_dir ) = @_;
 
-	# This has the same effect as
-	#   "perl Build.PL && Build authortest",
-	# only in code.
-	my $builder = Module::Build->new_from_context();
-	$builder->ACTION_authortest();
+    # This has the same effect as
+    #   "perl Build.PL && Build authortest",
+    # only in code.
+    my $builder = Module::Build->new_from_context;
+    $builder->ACTION_authortest;
 
-	return 1;
+    return 1;
 }
 
-__PACKAGE__->meta()->make_immutable();
+__PACKAGE__->meta->make_immutable;
 no Moose;
 1;
 

@@ -5,23 +5,19 @@ use Moose;
 use ExtUtils::MakeMaker;
 with 'Dist::Zilla::Role::VersionProvider';
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
-
+our $VERSION = '0.990';
 
 sub provide_version {
-	my ($self) = @_;
+    my ($self)  = @_;
+    my $name    = $self->zilla->main_module->name;
+    my $version = MM->parse_version($name);
 
-	my $name = $self->zilla->main_module->name;
+    $self->log_debug( [ 'providing version %s', $version ] );
 
-	my $version = MM->parse_version($name);
-
-	$self->log_debug( [ 'providing version %s', $version ] );
-
-	return $version;
+    return $version;
 }
 
-__PACKAGE__->meta()->make_immutable();
+__PACKAGE__->meta->make_immutable;
 no Moose;
 1;
 

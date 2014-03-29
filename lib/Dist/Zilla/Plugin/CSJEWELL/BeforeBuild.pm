@@ -5,31 +5,31 @@ use Moose;
 use Module::Build;
 with 'Dist::Zilla::Role::BeforeBuild';
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
-
+our $VERSION = '0.990';
 
 sub before_build {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	# This has the same effect as
-	#   "perl Build.PL && Build manifest && Build distmeta",
-	# only in code.
-	my $builder = Module::Build->new_from_context();
+    # This has the same effect as
+    #   "perl Build.PL && Build manifest && Build distmeta",
+    # only in code.
+    my $builder = Module::Build->new_from_context();
 
-	# Our ACTION_distmeta depends on 'manifest', so runs it.
-	$builder->ACTION_distmeta();
+    # Our ACTION_distmeta depends on 'manifest', so runs it.
+    $builder->ACTION_distmeta();
 
-	return 1;
+    return 1;
 } ## end sub before_build
 
-__PACKAGE__->meta()->make_immutable();
+__PACKAGE__->meta->make_immutable;
 no Moose;
 1;
 
 __END__
 
 =pod
+
+=for stopword Makefile yml README
 
 =head1 NAME
 

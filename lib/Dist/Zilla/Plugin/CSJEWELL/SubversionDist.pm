@@ -4,51 +4,50 @@ use 5.008003;
 use Moose;
 with 'Dist::Zilla::Role::Releaser';
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
+our $VERSION = '0.990';
 
 has directory => (
-	is       => 'ro',
-	isa      => 'Str',
-	required => 1,
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1,
 );
 
 has name => (
-	is      => 'ro',
-	isa     => 'Str',
-	default => 'DZ::Plugin::CSJEWELL::SubversionDist',
+    is      => 'ro',
+    isa     => 'Str',
+    default => 'DZ::Plugin::CSJEWELL::SubversionDist',
 );
 
 has debug => (
-	is      => 'ro',
-	isa     => 'Bool',
-	default => 0,
+    is      => 'ro',
+    isa     => 'Bool',
+    default => 0,
 );
 
 sub release {
-	my ( $self, $archive ) = @_;
+    my ( $self, $archive ) = @_;
 
-	my $filename    = $archive->stringify();
-	my $remote_file = $self->directory() . $filename;
-	my $bot_name    = $self->name();
-	my ( $release, $version ) =
-	  $filename =~ m/([\w-]+)-([\d_.]+)(?:-TRIAL)?.tar.gz/msx;
-	$release    =~ s/-/::/gms;
-	my $message = "[$bot_name] Importing upload file for $release $version";
+    my $filename    = $archive->stringify;
+    my $remote_file = $self->directory . $filename;
+    my $bot_name    = $self->name;
+    my ( $release, $version ) =
+      $filename =~ m/([\w-]+)-([\d_.]+)(?:-TRIAL)?.tar.gz/msx;
+    $release =~ s/-/::/gms;
+    my $message = "[$bot_name] Importing upload file for $release $version";
 
-	my $command = qq(svn import $filename $remote_file -m "$message" 2>&1);
-	if ( $self->debug() ) {
-		$self->log($command);
-	} else {
-		my $i = system $command;
-	}
+    my $command = qq(svn import $filename $remote_file -m "$message" 2>&1);
+    if ( $self->debug ) {
+        $self->log($command);
+    } else {
+        my $i = system $command;
+    }
 
-	$self->log('Release file committed to SVN.');
+    $self->log('Release file committed to SVN.');
 
-	return 1;
+    return 1;
 } ## end sub release
 
-__PACKAGE__->meta()->make_immutable();
+__PACKAGE__->meta->make_immutable;
 no Moose;
 1;
 
@@ -66,11 +65,11 @@ This document describes Dist::Zilla::Plugin::CSJEWELL::SubversionDist version 0.
 
 =head1 DESCRIPTION
 
-	; in dzil.ini
-	[CSJEWELL::SubversionDist]
-	directory    = http://svn.ali.as/cpan/release/
-	fake_release = 0
-	name         = DZ
+    ; in dzil.ini
+    [CSJEWELL::SubversionDist]
+    directory    = http://svn.ali.as/cpan/release/
+    fake_release = 0
+    name         = DZ
 
 =head1 INTERFACE
 

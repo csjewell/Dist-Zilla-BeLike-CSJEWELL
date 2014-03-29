@@ -6,80 +6,79 @@ use Net::Netrc;
 use Net::FTP;
 with 'Dist::Zilla::Role::Releaser';
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
+our $VERSION = '0.990';
 
 has site => (
-	is       => 'ro',
-	isa      => 'Str',
-	required => 1,
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1,
 );
 
 has directory => (
-	is       => 'ro',
-	isa      => 'Str',
-	required => 1,
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1,
 );
 
 has passive_ftp => (
-	is      => 'ro',
-	isa     => 'Int',
-	default => 1,
+    is      => 'ro',
+    isa     => 'Int',
+    default => 1,
 );
 
 has debug => (
-	is      => 'ro',
-	isa     => 'Int',
-	default => 0,
+    is      => 'ro',
+    isa     => 'Int',
+    default => 0,
 );
 
 sub release {
-	my ( $self, $archive ) = @_;
+    my ( $self, $archive ) = @_;
 
-	my $filename = $archive->stringify();
-	my $site     = $self->site();
-	my $siteinfo = Net::Netrc->lookup($site);
-	if ( not $siteinfo ) {
-		$self->log_fatal(
-			"Could not get information for $site from .netrc.");
-	}
-	my ( $user, $password, undef ) = $siteinfo->lpa();
+    my $filename = $archive->stringify();
+    my $site     = $self->site();
+    my $siteinfo = Net::Netrc->lookup($site);
+    if ( not $siteinfo ) {
+        $self->log_fatal(
+            "Could not get information for $site from .netrc.");
+    }
+    my ( $user, $password, undef ) = $siteinfo->lpa();
 
-	my $ftp = Net::FTP->new(
-		$site,
-		Debug   => $self->debug(),
-		Passive => $self->passive_ftp(),
-	);
+    my $ftp = Net::FTP->new(
+        $site,
+        Debug   => $self->debug(),
+        Passive => $self->passive_ftp(),
+    );
 
-	$ftp->login( $user, $password )
-	  or $self->log_fatal( 'Could not log in to ' . $site );
+    $ftp->login( $user, $password )
+      or $self->log_fatal( 'Could not log in to ' . $site );
 
-	$ftp->binary;
+    $ftp->binary;
 
-	$ftp->cwd( $self->directory() )
-	  or $self->log_fatal(
-		'Could not change remote site directory to' . $self->directory() );
+    $ftp->cwd( $self->directory() )
+      or $self->log_fatal(
+        'Could not change remote site directory to' . $self->directory() );
 
-	my $remote_file = $ftp->put($filename);
+    my $remote_file = $ftp->put($filename);
 
-	if ( $remote_file ne $filename ) {
-		$self->log_fatal( 'Could not upload file: ' . $ftp->message() );
-	}
+    if ( $remote_file ne $filename ) {
+        $self->log_fatal( 'Could not upload file: ' . $ftp->message() );
+    }
 
-	my $remote_size = $ftp->size($remote_file);
-	$remote_size ||= 0;
-	my $local_size = -s $filename;
+    my $remote_size = $ftp->size($remote_file);
+    $remote_size ||= 0;
+    my $local_size = -s $filename;
 
-	if ( $remote_size != $local_size ) {
-		$self->log( "Uploaded file is $remote_size bytes, "
-			  . "but local file is $local_size bytes" );
-	}
+    if ( $remote_size != $local_size ) {
+        $self->log( "Uploaded file is $remote_size bytes, "
+              . "but local file is $local_size bytes" );
+    }
 
-	$ftp->quit;
+    $ftp->quit;
 
-	$self->log( 'File uploaded to ' . $self->site() );
+    $self->log( 'File uploaded to ' . $self->site() );
 
-	return 1;
+    return 1;
 } ## end sub release
 
 __PACKAGE__->meta()->make_immutable();
@@ -100,15 +99,15 @@ This document describes Dist::Zilla::Plugin::CSJEWELL::FTPUploadToOwnSite versio
 
 =head1 DESCRIPTION
 
-	; in dzil.ini
-	[CSJEWELL::FTPUploadToOwnSite]
-	site        = ftp.geocities.invalid
-	directory   = /Heartland/Meadows/3044
-	passive_ftp = 1
-	debug       = 0
-	
-	# in $HOME/.netrc
-	machine ftp.geocities.invalid login csjewell password drowssap
+    ; in dzil.ini
+    [CSJEWELL::FTPUploadToOwnSite]
+    site        = ftp.geocities.invalid
+    directory   = /Heartland/Meadows/3044
+    passive_ftp = 1
+    debug       = 0
+    
+    # in $HOME/.netrc
+    machine ftp.geocities.invalid login csjewell password drowssap
 
 =head1 INTERFACE
 

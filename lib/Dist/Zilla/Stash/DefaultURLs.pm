@@ -3,23 +3,24 @@ package Dist::Zilla::Stash::DefaultURLs;
 use 5.008003;
 use Moose;
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
-
+our $VERSION = '0.990';
 
 has repository_location => (
-	is       => 'ro',
-	isa      => 'Str',
-	required => 1,
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1,
 );
 
 has homepage => (
-	is       => 'ro',
-	isa      => 'Str',
-	required => 1,
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1,
 );
 
 with 'Dist::Zilla::Role::Stash';
+
+__PACKAGE__->meta->make_immutable;
+no Moose;
 1;
 
 __END__

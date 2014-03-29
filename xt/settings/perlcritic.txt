@@ -1,5 +1,5 @@
 verbose = %f:%l:%c:\n %p: %m\n
-theme = (core || more)
+theme = (core || more) && !deprecated
 
 [ControlStructures::ProhibitPostfixControls]
 flowcontrol = warn die carp croak cluck confess goto exit throw return next
@@ -21,12 +21,10 @@ allowed_values = -1 0 1 2
 [Subroutines::ProhibitUnusedPrivateSubroutines]
 private_name_regex = _(?!build_)\w+
 
-# Exclusions
-# This one can be removed if keywords are used.
-[-Miscellanea::RequireRcsKeywords]
+[Documentation::PodSpelling]
+stop_words_file = xt/settings/stopwords.txt
 
-# Excluded because we filter out development versions.
-[-ValuesAndExpressions::RequireConstantVersion]
+# Exclusions
 
 # I like to set up my own pod.
 [-Documentation::RequirePodAtEnd]

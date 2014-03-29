@@ -4,43 +4,41 @@ use 5.008003;
 use Moose;
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
+our $VERSION = '0.990';
 
 has fake_release => (
-	is      => 'ro',
-	isa     => 'Bool',
-	lazy    => 1,
-	default => sub {
-		exists $_[0]->payload->{fake_release}
-		  ? $_[0]->payload->{fake_release}
-		  : 1;
-	},
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{'fake_release'}
+          ? $_[0]->payload->{'fake_release'}
+          : 1;
+    },
 );
 
 sub configure {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	my @plugins = qw(
-	  CSJEWELL::BeforeBuild
-	  GatherDir
-	  ManifestSkip
-	  CSJEWELL::VersionGetter
-	  CSJEWELL::AuthorTest
+    my @plugins = qw(
+      CSJEWELL::BeforeBuild
+      GatherDir
+      ManifestSkip
+      CSJEWELL::VersionGetter
 
-	  TestRelease
-	  ConfirmRelease
-	);
+      RunExtraTests
+      ConfirmRelease
+    );
 
-	push @plugins,
-	  ( $self->fake_release() ? 'FakeRelease' : 'UploadToCPAN' );
+    push @plugins,
+      ( $self->fake_release() ? 'FakeRelease' : 'UploadToCPAN' );
 
-	$self->add_plugins(@plugins);
+    $self->add_plugins(@plugins);
 
-	return $self;
+    return $self;
 } ## end sub configure
 
-__PACKAGE__->meta()->make_immutable();
+__PACKAGE__->meta->make_immutable;
 no Moose;
 1;
 
@@ -54,7 +52,7 @@ Dist::Zilla::PluginBundle::CSJEWELL - CSJEWELL's basic plugins to maintain and r
 
 =head1 VERSION
 
-This document describes Dist::Zilla::PluginBundle::CSJEWELL version 0.900.
+This document describes Dist::Zilla::PluginBundle::CSJEWELL version 0.990.
 
 =head1 DESCRIPTION
 
@@ -153,6 +151,3 @@ SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
 
 =cut
-
-
-

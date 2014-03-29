@@ -6,25 +6,23 @@ use File::Copy qw( move );
 use English qw( -no_match_vars );
 with 'Dist::Zilla::Role::AfterMint';
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
-
+our $VERSION = '0.990';
 
 sub after_mint {
-	my ( $self, $hash ) = @_;
+    my ( $self, $hash ) = @_;
 
-	my $root = $hash->{mint_root};
+    my $root = $hash->{'mint_root'};
 
-	my $source_file = $root->file('_hgignore')->stringify();
-	my $dest_file   = $root->file('.hgignore')->stringify();
+    my $source_file = $root->file('_hgignore')->stringify();
+    my $dest_file   = $root->file('.hgignore')->stringify();
 
-	move( $source_file, $dest_file )
-	  or $self->log("Could not move _hgignore to .hgignore: $OS_ERROR");
+    move( $source_file, $dest_file )
+      or $self->log("Could not move _hgignore to .hgignore: $OS_ERROR");
 
-	return 1;
+    return 1;
 } ## end sub after_mint
 
-__PACKAGE__->meta()->make_immutable();
+__PACKAGE__->meta->make_immutable;
 no Moose;
 1;
 

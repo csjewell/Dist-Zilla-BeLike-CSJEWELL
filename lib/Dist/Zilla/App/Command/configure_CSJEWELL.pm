@@ -3,71 +3,71 @@ package Dist::Zilla::App::Command::configure_CSJEWELL;
 use 5.008003;
 use strict;
 use warnings;
-use Dist::Zilla::App -command;
 use autodie;
+
+use Dist::Zilla::App -command;
 use File::Spec;
 
-our $VERSION = '0.900';
-$VERSION =~ s/_//sm;
+our $VERSION = '0.990';
 
 sub abstract { ## no critic(ProhibitAmbiguousNames)
-	return q{configure the 'CSJEWELL' minting profile.};
+    return q{configure the 'CSJEWELL' minting profile.};
 }
 
 sub validate_args {
-	my ( $self, undef, $args ) = @_;
+    my ( $self, undef, $args ) = @_;
 
-	if ( 0 != @{$args} ) {
-		$self->usage_error('Too many arguments');
-	}
+    if ( 0 != @{$args} ) {
+        $self->usage_error('Too many arguments');
+    }
 
-	return;
+    return;
 }
 
 sub execute {
-	my ( $self, undef, undef ) = @_;
+    my ( $self, undef, undef ) = @_;
 
-	my $chrome = $self->app()->chrome();
+    my $chrome = $self->app()->chrome();
 
-	## no critic(ProtectPrivateSubs)
-	my $config_root = Dist::Zilla::Util->_global_config_root();
+    ## no critic(ProtectPrivateSubs)
+    my $config_root = Dist::Zilla::Util->_global_config_root();
 
-	if (   not -d $config_root
-		or not -f File::Spec->catfile( $config_root, 'config.ini' ) )
-	{
-		$chrome->logger()->log_fatal( [
-				'A per-user configuration file does not exist in %s',
-				"$config_root",
-			] );
+    if (   not -d $config_root
+        or not -f File::Spec->catfile( $config_root, 'config.ini' ) )
+    {
+        $chrome->logger()->log_fatal(
+            [   'A per-user configuration file does not exist in %s',
+                "$config_root",
+            ] );
 
-		return;
-	}
+        return;
+    }
 
-	my $homepage = $chrome->prompt_str(
-		'Where is your homepage?',
-		{   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
-			default => 'http://search.cpan.org/~username/',
-		},
-	);
+    my $homepage = $chrome->prompt_str(
+        'Where is your homepage?',
+        {   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
+            default => 'http://metacpan.org/author/USERNAME/',
+        },
+    );
 
-	my $repo = $chrome->prompt_str(
-		'Where are your repositories?',
-		{   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
-			default => 'http://bitbucket.org/username/',
-		},
-	);
+    my $repo = $chrome->prompt_str(
+        'Where are your repositories?',
+        {   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
+            default => 'http://bitbucket.org/username/',
+        },
+    );
 
-	open my $fh, '>>', $config_root->file('config.ini');
+    open my $fh, '>>', $config_root->file('config.ini');
 
-	$fh->print("\n[%DefaultURLs]\n");
-	$fh->print("homepage            = $homepage\n");
-	$fh->print("repository_location = $repo\n\n");
+    $fh->print("\n[%DefaultURLs]\n");
+    $fh->print("homepage            = $homepage\n");
+    $fh->print("repository_location = $repo\n\n");
 
-	close $fh;
+    close $fh;
 
-	$self->log('Added to config.ini file.');
+    $self->log('Added to config.ini file.');
 
-	return;
+    return;
 } ## end sub execute
 
 1;
@@ -137,4 +137,3 @@ SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
 
 =cut
-
