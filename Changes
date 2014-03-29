@@ -1,6 +1,9 @@
 Revision history for Dist-Zilla-CSJEWELL
 
-0.990  Sat 29 Mar 2014
+0.991  Sat 29 Mar 2014
+       - Really released to CPAN.
+
+0.990  Fri 28 Mar 2014
        - Update for new plugins being used.
 
 0.901  Thu 18 Aug 2010
