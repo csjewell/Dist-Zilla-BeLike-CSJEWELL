@@ -1,6 +1,9 @@
-Revision history for Dist-Zilla-CSJEWELL
+Revision history for Dist-Zilla-BeLike-CSJEWELL
 
-0.991  Sat 29 Mar 2014
+0.992  Sat 29 Mar 2014 (TRIAL)
+       - Get the metadata right.
+
+0.991  Sat 29 Mar 2014 (TRIAL)
        - Really released to CPAN.
 
 0.990  Fri 28 Mar 2014

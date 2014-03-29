@@ -4,7 +4,7 @@ use 5.008003;
 use warnings;
 use strict;
 
-our $VERSION = '0.991';
+our $VERSION = '0.992';
 
 # Documentation module only.
 

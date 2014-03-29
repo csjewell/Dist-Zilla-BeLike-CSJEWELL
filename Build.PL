@@ -113,9 +113,9 @@ my $builder = $class->new(
     },
     meta_merge     => {
         resources => {
-            homepage    => 'http://perl.curtisjewell.name/',
+            homepage    => 'http://www.curtisjewell.name/',
             bugtracker  => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Dist-Zilla-BeLike-CSJEWELL',
-            repository  => 'http://bitbucket.org/csjewell/dist-zilla-belike-csjewell'
+            repository  => 'http://hg.curtisjewell.name/Dist-Zilla-BeLike-CSJEWELL'
         },
     },
     share_dir => {
