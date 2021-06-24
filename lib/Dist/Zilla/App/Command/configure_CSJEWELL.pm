@@ -6,9 +6,10 @@ use warnings;
 use autodie;
 
 use Dist::Zilla::App -command;
+use Dist::Zilla::Util;
 use File::Spec;
 
-our $VERSION = '0.990';
+our $VERSION = '0.993';
 
 sub abstract { ## no critic(ProhibitAmbiguousNames)
     return q{configure the 'CSJEWELL' minting profile.};
@@ -33,7 +34,7 @@ sub execute {
     my $config_root = Dist::Zilla::Util->_global_config_root();
 
     if (   not -d $config_root
-        or not -f File::Spec->catfile( $config_root, 'config.ini' ) )
+        or not -f $config_root->child('config.ini') )
     {
         $chrome->logger()->log_fatal(
             [   'A per-user configuration file does not exist in %s',
@@ -46,18 +47,18 @@ sub execute {
     my $homepage = $chrome->prompt_str(
         'Where is your homepage?',
         {   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
-            default => 'http://metacpan.org/author/USERNAME/',
+            default => 'https://metacpan.org/author/USERNAME/',
         },
     );
 
     my $repo = $chrome->prompt_str(
         'Where are your repositories?',
         {   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
-            default => 'http://bitbucket.org/username/',
+            default => 'https://github.com/username/',
         },
     );
 
-    open my $fh, '>>', $config_root->file('config.ini');
+    open my $fh, '>>', $config_root->child('config.ini');
 
     $fh->print("\n[%DefaultURLs]\n");
     $fh->print("homepage            = $homepage\n");
@@ -103,7 +104,7 @@ L<Dist::Zilla::BeLike::CSJEWELL|Dist::Zilla::BeLike::CSJEWELL>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2010, Curtis Jewell C<< CSJewell@cpan.org >>.
+Copyright (c) 2010, 2021 Curtis Jewell C<< CSJewell@cpan.org >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself, either version

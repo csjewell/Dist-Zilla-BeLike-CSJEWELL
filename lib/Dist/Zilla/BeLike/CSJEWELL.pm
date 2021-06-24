@@ -4,7 +4,7 @@ use 5.008003;
 use warnings;
 use strict;
 
-our $VERSION = '0.992';
+our $VERSION = '0.993';
 
 # Documentation module only.
 
@@ -15,7 +15,7 @@ __END__
 
 =begin readme text
 
-Dist::Zilla::BeLike::CSJEWELL version 0.990
+Dist::Zilla::BeLike::CSJEWELL version 0.993
 
 =end readme
 
@@ -76,7 +76,7 @@ The configuration questions are asked for in the C<dzil configure_CSJEWELL> comm
 =head1 DEPENDENCIES
 
 This module depends on L<Dist::Zilla|Dist::Zilla> version 4.102221 or greater,
-L<Dist::Zilla::Plugin::Mercurial|Dist::Zilla::Plugin::Mercurial>, 
+L<Dist::Zilla::Plugin::Git|Dist::Zilla::Plugin::Git>, 
 L<Dist::Zilla::Plugin::Twitter|Dist::Zilla::Plugin::Twitter>, ...
 
 =for readme stop
@@ -86,9 +86,6 @@ L<Dist::Zilla::Plugin::Twitter|Dist::Zilla::Plugin::Twitter>, ...
 None reported.
 
 =head1 BUGS AND LIMITATIONS
-
-This module does not know how to automatically handle any Mercurial servers 
-other than bitbucket.org, or any other VCS or DVCS server at the moment.
 
 No bugs have been reported.
 
@@ -107,7 +104,7 @@ Curtis Jewell <CSJewell@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2010, Curtis Jewell C<< CSJewell@cpan.org >>.
+Copyright (c) 2010, 2014, 2021 Curtis Jewell C<< CSJewell@cpan.org >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself, either version

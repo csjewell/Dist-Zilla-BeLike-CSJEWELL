@@ -1,16 +1,17 @@
 Dist-Zilla-BeLike-CSJEWELL*
 blib
+.swp
 .build
 _build
 Build.bat
-glob:Build
+Build
 LICENSE
 README
-glob:MANIFEST
+MANIFEST
 Makefile.PL
 META.yml
 MYMETA.yml
 META.json
 MYMETA.json
-glob:*.bak
+.bak
 

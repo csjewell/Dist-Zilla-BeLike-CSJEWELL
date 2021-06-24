@@ -1,5 +1,9 @@
 Revision history for Dist-Zilla-BeLike-CSJEWELL
 
+0.993  <tbd>
+       - Update to Dist::Zilla 6
+       - Git won the DVCS wars, giving in.
+
 0.992  Sat 29 Mar 2014 (TRIAL)
        - Get the metadata right.
 

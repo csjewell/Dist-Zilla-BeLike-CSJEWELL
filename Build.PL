@@ -67,17 +67,14 @@ my $builder = $class->new(
     },
     requires => {
         'perl'                                => '5.008003',
-        'Dist::Zilla'                         => '4.102221',
-        'Dist::Zilla::Plugin::Mercurial'      => '0.03',
+        'Dist::Zilla'                         => '6.012',
+        'Dist::Zilla::Plugin::Git'            => '0.03',
         'Dist::Zilla::Plugin::Twitter'        => '0.009',
         'Module::Build'                       => '0.3614',
         'Moose'                               => '1.09',
         'autodie'                             => '2.10',
         'Pod::Readme'                         => '0.10',
         'Software::License'                   => '0.101620',
-        # These next 2 are from libnet 1.22.
-        'Net::Netrc'                          => '2.12',
-        'Net::FTP'                            => '2.77',
         # These are what the author tests require.
         # Might as well have the prospective builder install
         #  them now.
@@ -113,9 +110,9 @@ my $builder = $class->new(
     },
     meta_merge     => {
         resources => {
-            homepage    => 'http://www.curtisjewell.name/',
+            homepage    => 'http://curtisjewell.website/',
             bugtracker  => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Dist-Zilla-BeLike-CSJEWELL',
-            repository  => 'http://hg.curtisjewell.name/Dist-Zilla-BeLike-CSJEWELL'
+            repository  => 'http://git.curtisjewell.website/Dist-Zilla-BeLike-CSJEWELL'
         },
     },
     share_dir => {

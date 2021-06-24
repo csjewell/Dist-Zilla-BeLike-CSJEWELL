@@ -2,22 +2,22 @@ package Dist::Zilla::Plugin::CSJEWELL::DotFileFix;
 
 use 5.008003;
 use Moose;
-use File::Copy qw( move );
-use English qw( -no_match_vars );
+use File::Copy qw(move);
+use English qw(-no_match_vars);
 with 'Dist::Zilla::Role::AfterMint';
 
-our $VERSION = '0.990';
+our $VERSION = '0.993';
 
 sub after_mint {
-    my ( $self, $hash ) = @_;
+    my ($self, $hash) = @_;
 
     my $root = $hash->{'mint_root'};
 
-    my $source_file = $root->file('_hgignore')->stringify();
-    my $dest_file   = $root->file('.hgignore')->stringify();
+    my $source_file = $root->file('_gitignore')->stringify();
+    my $dest_file   = $root->file('.gitignore')->stringify();
 
-    move( $source_file, $dest_file )
-      or $self->log("Could not move _hgignore to .hgignore: $OS_ERROR");
+    move($source_file, $dest_file)
+      or $self->log("Could not move _gitignore to .gitignore: $OS_ERROR");
 
     return 1;
 } ## end sub after_mint
@@ -32,15 +32,15 @@ __END__
 
 =head1 NAME
 
-Dist::Zilla::Plugin::CSJEWELL::DotFileFix - Fix the .hgignore file.
+Dist::Zilla::Plugin::CSJEWELL::DotFileFix - Fix the .gitignore file.
 
 =head1 VERSION
 
-This document describes Dist::Zilla::Plugin::CSJEWELL::DotFileFix version 0.900.
+This document describes Dist::Zilla::Plugin::CSJEWELL::DotFileFix version 0.993.
 
 =head1 DESCRIPTION
 
-This plugin renames the _hgignore file in the source to .hgignore.
+This plugin renames the _gitignore file in the source to .gitignore.
 
 =for Pod::Coverage after_mint
 
@@ -54,7 +54,7 @@ L<Dist::Zilla::BeLike::CSJEWELL|Dist::Zilla::BeLike::CSJEWELL>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2010, Curtis Jewell C<< CSJewell@cpan.org >>.
+Copyright (c) 2010, 2021 Curtis Jewell C<< CSJewell@cpan.org >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself, either version

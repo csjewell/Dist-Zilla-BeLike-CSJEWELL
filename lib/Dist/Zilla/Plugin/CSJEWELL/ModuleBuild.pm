@@ -1,21 +1,13 @@
-package Dist::Zilla::Plugin::CSJEWELL::VersionGetter;
+package Dist::Zilla::Plugin::CSJEWELL::ModuleBuild;
 
 use 5.008003;
 use Moose;
-use ExtUtils::MakeMaker;
-with 'Dist::Zilla::Role::VersionProvider';
+use Module::Build;
+with 'Dist::Zilla::Role::BuildPL';
 
-our $VERSION = '0.990';
+our $VERSION = '0.993';
 
-sub provide_version {
-    my ($self)  = @_;
-    my $name    = $self->zilla->main_module->name;
-    my $version = MM->parse_version($name);
-
-    $self->log_debug([ 'providing version %s', $version ]);
-
-    return $version;
-}
+sub setup_installer {}
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
@@ -25,20 +17,19 @@ __END__
 
 =pod
 
+=for stopword Makefile yml README
+
 =head1 NAME
 
-Dist::Zilla::Plugin::CSJEWELL::VersionGetter - Grab the version from the main file
+Dist::Zilla::Plugin::CSJEWELL::ModuleBuild - Let the already committed Build.PL build the dist.
 
 =head1 VERSION
 
-This document describes Dist::Zilla::Plugin::CSJEWELL::VersionGetter version 0.993.
+This document describes Dist::Zilla::Plugin::CSJEWELL::ModuleBuild version 0.993.
 
 =head1 DESCRIPTION
 
-This plugin gets the distribution version from the main distribution module, 
-by calling ExtUtils::MakeMaker->parse_version().
-
-=for Pod::Coverage provide_version
+This plugin asks an already committed Build.PL to build the dist.
 
 =head1 AUTHOR
 
@@ -50,7 +41,7 @@ L<Dist::Zilla::BeLike::CSJEWELL|Dist::Zilla::BeLike::CSJEWELL>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2010, 2021 Curtis Jewell C<< CSJewell@cpan.org >>.
+Copyright (c) 2021, Curtis Jewell C<< CSJewell@cpan.org >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself, either version

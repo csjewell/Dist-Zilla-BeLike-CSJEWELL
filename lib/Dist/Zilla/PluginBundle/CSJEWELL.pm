@@ -4,7 +4,7 @@ use 5.008003;
 use Moose;
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
-our $VERSION = '0.990';
+our $VERSION = '0.993';
 
 has fake_release => (
     is      => 'ro',
@@ -17,6 +17,17 @@ has fake_release => (
     },
 );
 
+has darkpan => (
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{'darkpan'}
+          ? $_[0]->payload->{'darkpan'}
+          : 0;
+    },
+);
+
 sub configure {
     my ($self) = @_;
 
@@ -25,13 +36,14 @@ sub configure {
       GatherDir
       ManifestSkip
       CSJEWELL::VersionGetter
+      CSJEWELL::ModuleBuild
 
       RunExtraTests
       ConfirmRelease
     );
 
     push @plugins,
-      ( $self->fake_release() ? 'FakeRelease' : 'UploadToCPAN' );
+      ( $self->fake_release() ? 'FakeRelease' : $self->darkpan() ? 'CSJEWELL::UploadToDarkPAN' : 'UploadToCPAN' );
 
     $self->add_plugins(@plugins);
 
@@ -52,7 +64,7 @@ Dist::Zilla::PluginBundle::CSJEWELL - CSJEWELL's basic plugins to maintain and r
 
 =head1 VERSION
 
-This document describes Dist::Zilla::PluginBundle::CSJEWELL version 0.990.
+This document describes Dist::Zilla::PluginBundle::CSJEWELL version 0.993.
 
 =head1 DESCRIPTION
 
@@ -94,6 +106,10 @@ L<Dist::Zilla::Plugin::ConfirmRelease|Dist::Zilla::Plugin::ConfirmRelease>
 
 =item *
 
+L<Dist::Zilla::Plugin::UploadToCPAN|Dist::Zilla::Plugin::UploadToDarkPAN> *
+
+=item *
+
 L<Dist::Zilla::Plugin::UploadToCPAN|Dist::Zilla::Plugin::UploadToCPAN> *
 
 =item *
@@ -102,8 +118,10 @@ L<Dist::Zilla::Plugin::FakeRelease|Dist::Zilla::Plugin::FakeRelease> *
 
 =back
 
-* Note that the choice of which the last two is given by a "fake_release" 
-option to the plugin bundle, which must exist and be 0 to use UploadToCPAN.
+* Note that the choice of which the last three is given by two options to the
+plugin bundle - if "fake_release" does not exist, or if it exists and is 1,
+then FakeRelase is used, and if "darkpan" exists and is 1, then
+CSJEWELL::UploadToDarkPAN is used. Otherwise, UploadToCPAN is used.
 
 =for Pod::Coverage configure
 
