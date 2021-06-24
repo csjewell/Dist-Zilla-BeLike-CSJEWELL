@@ -35,6 +35,7 @@
 \bBuild$
 \bBuild.bat$
 \b_build
+^\.build
 \bBuild.COM$
 \bBUILD.COM$
 \bbuild.com$
