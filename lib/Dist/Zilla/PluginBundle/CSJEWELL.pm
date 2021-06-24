@@ -12,8 +12,8 @@ has fake_release => (
     lazy    => 1,
     default => sub {
         exists $_[0]->payload->{'fake_release'}
-          ? $_[0]->payload->{'fake_release'}
-          : 1;
+            ? $_[0]->payload->{'fake_release'}
+            : 1;
     },
 );
 
@@ -23,8 +23,8 @@ has darkpan => (
     lazy    => 1,
     default => sub {
         exists $_[0]->payload->{'darkpan'}
-          ? $_[0]->payload->{'darkpan'}
-          : 0;
+            ? $_[0]->payload->{'darkpan'}
+            : 0;
     },
 );
 
@@ -32,18 +32,22 @@ sub configure {
     my ($self) = @_;
 
     my @plugins = qw(
-      CSJEWELL::BeforeBuild
-      GatherDir
-      ManifestSkip
-      CSJEWELL::VersionGetter
-      CSJEWELL::ModuleBuild
+        CSJEWELL::BeforeBuild
+        GatherDir
+        ManifestSkip
+        CSJEWELL::VersionGetter
+        CSJEWELL::ModuleBuild
 
-      RunExtraTests
-      ConfirmRelease
+        RunExtraTests
+        ConfirmRelease
     );
 
     push @plugins,
-      ( $self->fake_release() ? 'FakeRelease' : $self->darkpan() ? 'CSJEWELL::UploadToDarkPAN' : 'UploadToCPAN' );
+        (
+          $self->fake_release() ? 'FakeRelease'
+        : $self->darkpan()      ? 'CSJEWELL::UploadToDarkPAN'
+        :                         'UploadToCPAN'
+        );
 
     $self->add_plugins(@plugins);
 
@@ -120,10 +124,12 @@ L<Dist::Zilla::Plugin::FakeRelease|Dist::Zilla::Plugin::FakeRelease> *
 
 * Note that the choice of which the last three is given by two options to the
 plugin bundle - if "fake_release" does not exist, or if it exists and is 1,
-then FakeRelase is used, and if "darkpan" exists and is 1, then
+then FakeRelease is used, and if "darkpan" exists and is 1, then
 CSJEWELL::UploadToDarkPAN is used. Otherwise, UploadToCPAN is used.
 
-=for Pod::Coverage configure
+=for Pod::Coverage darkpan configure
+
+=for stopword Makefile yml README
 
 =head1 AUTHOR
 

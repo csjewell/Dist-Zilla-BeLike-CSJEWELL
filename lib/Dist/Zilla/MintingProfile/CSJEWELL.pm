@@ -7,9 +7,9 @@ with 'Dist::Zilla::Role::MintingProfile::ShareDir';
 our $VERSION = '0.990';
 
 around 'profile_dir' => sub {
-    my ( $orig, $self, $profile_name ) = @_;
+    my ($orig, $self, $profile_name) = @_;
 
-    if ( 'default' eq $profile_name ) { undef $profile_name; }
+    if ('default' eq $profile_name) { undef $profile_name; }
 
     $profile_name ||= 'csjewell';
 

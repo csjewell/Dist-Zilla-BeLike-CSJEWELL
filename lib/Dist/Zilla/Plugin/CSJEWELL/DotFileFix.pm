@@ -17,7 +17,7 @@ sub after_mint {
     my $dest_file   = $root->file('.gitignore')->stringify();
 
     move($source_file, $dest_file)
-      or $self->log("Could not move _gitignore to .gitignore: $OS_ERROR");
+        or $self->log("Could not move _gitignore to .gitignore: $OS_ERROR");
 
     return 1;
 } ## end sub after_mint

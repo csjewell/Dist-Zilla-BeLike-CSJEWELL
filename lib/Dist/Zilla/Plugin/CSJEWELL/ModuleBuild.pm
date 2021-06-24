@@ -7,7 +7,7 @@ with 'Dist::Zilla::Role::BuildPL';
 
 our $VERSION = '0.993';
 
-sub setup_installer {}
+sub setup_installer { }
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
@@ -18,6 +18,8 @@ __END__
 =pod
 
 =for stopword Makefile yml README
+
+=for Pod::Coverage setup_installer
 
 =head1 NAME
 

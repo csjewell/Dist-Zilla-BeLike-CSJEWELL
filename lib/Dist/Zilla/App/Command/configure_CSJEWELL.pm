@@ -16,9 +16,9 @@ sub abstract { ## no critic(ProhibitAmbiguousNames)
 }
 
 sub validate_args {
-    my ( $self, undef, $args ) = @_;
+    my ($self, undef, $args) = @_;
 
-    if ( 0 != @{$args} ) {
+    if (0 != @{$args}) {
         $self->usage_error('Too many arguments');
     }
 
@@ -26,7 +26,7 @@ sub validate_args {
 }
 
 sub execute {
-    my ( $self, undef, undef ) = @_;
+    my ($self, undef, undef) = @_;
 
     my $chrome = $self->app()->chrome();
 
@@ -34,26 +34,26 @@ sub execute {
     my $config_root = Dist::Zilla::Util->_global_config_root();
 
     if (   not -d $config_root
-        or not -f $config_root->child('config.ini') )
+        or not -f $config_root->child('config.ini'))
     {
         $chrome->logger()->log_fatal(
             [   'A per-user configuration file does not exist in %s',
                 "$config_root",
-            ] );
+            ]);
 
         return;
     }
 
     my $homepage = $chrome->prompt_str(
         'Where is your homepage?',
-        {   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
+        {   check   => sub { defined $_[0] and $_[0] =~ /\S/ms },
             default => 'https://metacpan.org/author/USERNAME/',
         },
     );
 
     my $repo = $chrome->prompt_str(
         'Where are your repositories?',
-        {   check => sub { defined $_[0] and $_[0] =~ /\S/ms },
+        {   check   => sub { defined $_[0] and $_[0] =~ /\S/ms },
             default => 'https://github.com/username/',
         },
     );

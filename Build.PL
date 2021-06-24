@@ -79,6 +79,7 @@ my $builder = $class->new(
         # Might as well have the prospective builder install
         #  them now.
         'Perl::MinimumVersion'                => '1.26',
+        'Pod::Coverage::TrustPod'             => '0.01',
         'Pod::Coverage::Moose'                => '0.01',
         'Pod::Coverage'                       => '0.21',
         'Test::Pod::Coverage'                 => '1.08',

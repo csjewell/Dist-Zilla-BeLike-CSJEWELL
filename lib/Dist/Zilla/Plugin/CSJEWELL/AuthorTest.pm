@@ -8,7 +8,7 @@ with 'Dist::Zilla::Role::TestRunner';
 our $VERSION = '0.990';
 
 sub test {
-    my ( $self, $test_dir ) = @_;
+    my ($self, $test_dir) = @_;
 
     # This has the same effect as
     #   "perl Build.PL && Build authortest",
