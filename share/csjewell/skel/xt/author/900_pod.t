@@ -1,6 +1,6 @@
 #!perl
 
-# Test that our files are portable across systems.
+# Test that the syntax of our POD documentation is valid
 
 use strict;
 
@@ -11,12 +11,11 @@ BEGIN {
     $WARNING          = 1;
 }
 
-my @MODULES = ('Test::Portability::Files 0.05',);
+my @MODULES = ('Pod::Simple 3.14', 'Test::Pod 1.44',);
 
 # Load the testing modules
-# use Test::More;
-use Test::More skip_all => 'Installs a known non-portable file.';
-use Test::DescribeMe qw(author);
+use Test::More;
+use Test::DescribeMe qw(author); 
 foreach my $MODULE (@MODULES) {
     eval "use $MODULE";
     if ($EVAL_ERROR) {
@@ -24,5 +23,7 @@ foreach my $MODULE (@MODULES) {
     }
 }
 
-run_tests();
+my @files = sort { $a cmp $b } all_pod_files();
+
+all_pod_files_ok(@files);
 

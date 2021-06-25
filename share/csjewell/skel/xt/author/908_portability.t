@@ -14,8 +14,7 @@ BEGIN {
 my @MODULES = ('Test::Portability::Files 0.05',);
 
 # Load the testing modules
-# use Test::More;
-use Test::More skip_all => 'Installs a known non-portable file.';
+use Test::More;
 use Test::DescribeMe qw(author);
 foreach my $MODULE (@MODULES) {
     eval "use $MODULE";

@@ -4,13 +4,6 @@
 
 use strict;
 
-sub filter {
-    my $module = shift;
-
-    return 0 if $module =~ m/auto::share/;
-    return 1;
-}
-
 BEGIN {
     use English qw(-no_match_vars);
     $OUTPUT_AUTOFLUSH = 1;
@@ -18,7 +11,12 @@ BEGIN {
 }
 
 # If using Moose, uncomment the appropriate lines below.
-my @MODULES = ('Pod::Coverage::TrustPod 0.092830', 'Pod::Coverage 0.21', 'Test::Pod::Coverage 1.08',);
+my @MODULES = (
+
+    #    'Pod::Coverage::Moose 0.01',
+    'Pod::Coverage 0.21',
+    'Test::Pod::Coverage 1.08',
+);
 
 # Load the testing modules
 use Test::More;
@@ -31,15 +29,16 @@ foreach my $MODULE (@MODULES) {
 }
 
 my @modules         = all_modules();
-my @modules_to_test = sort { $a cmp $b } grep { filter($_) } @modules;
+my @modules_to_test = sort { $a cmp $b } @modules;
 my $test_count      = scalar @modules_to_test;
 plan tests => $test_count;
 
 foreach my $module (@modules_to_test) {
     pod_coverage_ok(
         $module,
-        {   coverage_class => 'Pod::Coverage::TrustPod',
-            also_private   => [qr/^[A-Z_]+$/],
+        {
+            #        coverage_class => 'Pod::Coverage::Moose',
+            also_private => [qr/^[A-Z_]+$/],
         });
 }
 

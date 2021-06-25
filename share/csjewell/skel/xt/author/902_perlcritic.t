@@ -33,11 +33,11 @@ if (1.108 > eval {$Perl::Critic::VERSION}) {
     plan(skip_all => 'Perl::Critic needs updated to 1.108');
 }
 
-if (20121207 > eval {$Perl::Tidy::VERSION}) {
-    plan(skip_all => "Perl::Tidy needs updated to 20121207");
+if (20090616 > eval {$Perl::Tidy::VERSION}) {
+    plan(skip_all => "Perl::Tidy needs updated to 20090616");
 }
 
-use File::Spec::Functions qw(catfile catdir);
+use File::Spec::Functions qw(catfile);
 Perl::Critic::Utils::Constants->import(':profile_strictness');
 my $dummy = $Perl::Critic::Utils::Constants::PROFILE_STRICTNESS_QUIET;
 
@@ -49,10 +49,5 @@ Test::Perl::Critic->import(
     -severity           => 1,
     -profile-strictness => $Perl::Critic::Utils::Constants::PROFILE_STRICTNESS_QUIET
 );
+all_critic_ok();
 
-# I only want to criticize my own modules, not the share directory...
-if (-d catdir('blib', 'lib')) {
-    all_critic_ok(catdir('blib', 'lib', 'Dist'));
-} else {
-    all_critic_ok('lib');
-}
