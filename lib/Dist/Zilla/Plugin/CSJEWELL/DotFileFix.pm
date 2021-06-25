@@ -13,8 +13,8 @@ sub after_mint {
 
     my $root = $hash->{'mint_root'};
 
-    my $source_file = $root->file('_gitignore')->stringify();
-    my $dest_file   = $root->file('.gitignore')->stringify();
+    my $source_file = $root->child('_gitignore')->stringify();
+    my $dest_file   = $root->child('.gitignore')->stringify();
 
     move($source_file, $dest_file)
         or $self->log("Could not move _gitignore to .gitignore: $OS_ERROR");

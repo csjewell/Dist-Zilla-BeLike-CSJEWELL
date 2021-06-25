@@ -1,13 +1,11 @@
 --warning-output
 --maximum-line-length=76
 --indent-columns=4
-# --check-syntax
-# -perl-syntax-check-flags=-c
---continuation-indentation=2
+--continuation-indentation=4
 --outdent-long-quotes
 --outdent-long-lines
 --outdent-labels
---paren-tightness=1
+--paren-tightness=2
 --square-bracket-tightness=1
 --block-brace-tightness=1
 --space-for-semicolon
@@ -34,4 +32,4 @@
 --blanks-before-blocks
 --long-block-line-count=4
 --maximum-consecutive-blank-lines=5
-
+--tight-secret-operators

@@ -5,7 +5,7 @@ use Moose;
 use Module::Build;
 with 'Dist::Zilla::Role::TestRunner';
 
-our $VERSION = '0.990';
+our $VERSION = '0.993';
 
 sub test {
     my ($self, $test_dir) = @_;

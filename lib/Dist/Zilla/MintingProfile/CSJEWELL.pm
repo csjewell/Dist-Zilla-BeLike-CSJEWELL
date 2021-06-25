@@ -4,7 +4,7 @@ use 5.008003;
 use Moose;
 with 'Dist::Zilla::Role::MintingProfile::ShareDir';
 
-our $VERSION = '0.990';
+our $VERSION = '0.993';
 
 around 'profile_dir' => sub {
     my ($orig, $self, $profile_name) = @_;
@@ -30,7 +30,7 @@ Dist::Zilla::MintingProfile::CSJEWELL - Create a new dist.
 
 =head1 VERSION
 
-This document describes Dist::Zilla::MintingProfile::CSJEWELL version 0.900.
+This document describes Dist::Zilla::MintingProfile::CSJEWELL version 0.993.
 
 =head1 DESCRIPTION
 
