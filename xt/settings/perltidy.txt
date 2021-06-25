@@ -1,5 +1,5 @@
 --warning-output
---maximum-line-length=76
+--maximum-line-length=116
 --indent-columns=4
 --continuation-indentation=4
 --outdent-long-quotes

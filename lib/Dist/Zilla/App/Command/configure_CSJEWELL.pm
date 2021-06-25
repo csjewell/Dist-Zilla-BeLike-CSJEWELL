@@ -9,7 +9,7 @@ use Dist::Zilla::App -command;
 use Dist::Zilla::Util;
 use File::Spec;
 
-our $VERSION = '0.993';
+our $VERSION = '0.994';
 
 sub abstract { ## no critic(ProhibitAmbiguousNames)
     return q{configure the 'CSJEWELL' minting profile.};
@@ -36,10 +36,7 @@ sub execute {
     if (   not -d $config_root
         or not -f $config_root->child('config.ini'))
     {
-        $chrome->logger()->log_fatal(
-            [   'A per-user configuration file does not exist in %s',
-                "$config_root",
-            ]);
+        $chrome->logger()->log_fatal([ 'A per-user configuration file does not exist in %s', "$config_root", ]);
 
         return;
     }
@@ -83,7 +80,7 @@ Dist::Zilla::App::Command::configure_CSJEWELL - set up the global config file
 
 =head1 VERSION
 
-This document describes Dist::Zilla::App::Command::configure_CSJEWELL version 0.900.
+This document describes Dist::Zilla::App::Command::configure_CSJEWELL version 0.994.
 
 =head1 SYNOPSIS
 

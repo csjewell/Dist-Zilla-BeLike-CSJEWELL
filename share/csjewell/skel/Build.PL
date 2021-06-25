@@ -59,16 +59,16 @@ END_CODE
 }}
 
 my $builder = $class->new(
-    module_name              => '{{$dist_module}}',
-    license                  => '{{$dist->license->meta_name}}',
-    dist_author              => [ '{{$authors_list}}' ],
-    dist_version_from        => '{{$dist->main_module->name}}',
-    create_readme            => 1,
-    create_license           => 1,
-    create_makefile_pl       => 'small',
-    release_status           => 'unstable',
-    configure_requires       => {
-        'Module::Build'      => '0.3614',
+    module_name        => '{{$dist_module}}',
+    license            => '{{$dist->license->meta_name}}',
+    dist_author        => ['{{$authors_list}}'],
+    dist_version_from  => '{{$dist->main_module->name}}',
+    create_readme      => 1,
+    create_license     => 1,
+    create_makefile_pl => 'small',
+    release_status     => 'unstable',
+    configure_requires => {
+        'Module::Build' => '0.3614',
     },
     requires => {
         'perl'                => '5.008001',
@@ -76,16 +76,16 @@ my $builder = $class->new(
 #        'Exception::Class'    => '1.29',
     },
     build_requires => {
-        'Test::More'          => '0.88',
+        'Test::More' => '0.88',
     },
-    meta_merge     => {
+    meta_merge => {
         resources => {
-            homepage    => '{{$homepage}}',
-            bugtracker  => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist={{$dist->name}}',
-            repository  => '{{$repository}}'
+            homepage   => '{{$homepage}}',
+            bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist={{$dist->name}}',
+            repository => '{{$repository}}'
         },
     },
-    add_to_cleanup      => [ '{{$dist->name}}-*', ],
+    add_to_cleanup => [ '{{$dist->name}}-*', ],
 );
 
 $builder->create_build_script();

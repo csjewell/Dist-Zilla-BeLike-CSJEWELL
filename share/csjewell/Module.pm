@@ -20,7 +20,7 @@ our $VERSION = '0.001';
 
 #__PACKAGE__->meta->make_immutable;
 #no Moose;
-1; # Magic true value required at end of module
+1;                                     # Magic true value required at end of module
 __END__
 
 =pod

@@ -4,7 +4,7 @@ use 5.008003;
 use warnings;
 use strict;
 
-our $VERSION = '0.993';
+our $VERSION = '0.994';
 
 # Documentation module only.
 
@@ -15,7 +15,7 @@ __END__
 
 =begin readme text
 
-Dist::Zilla::BeLike::CSJEWELL version 0.993
+Dist::Zilla::BeLike::CSJEWELL version 0.994
 
 =end readme
 
@@ -27,7 +27,7 @@ Dist::Zilla::BeLike::CSJEWELL - Build a modern dist like CSJEWELL does it.
 
 =head1 VERSION
 
-This document describes Dist::Zilla::BeLike::CSJEWELL version 0.901.
+This document describes Dist::Zilla::BeLike::CSJEWELL version 0.994.
 
 =begin readme
 
@@ -57,7 +57,7 @@ Alternatively, to install with Module::Build, you can use the following commands
 =head1 SYNOPSIS
 
     # After 'dzil setup'
-    dzil configure_CSJEWELL
+    dzil configure_csjewell
     
     # To create a module
     dzil new -P CSJEWELL Your::Module
@@ -75,7 +75,7 @@ The configuration questions are asked for in the C<dzil configure_CSJEWELL> comm
 
 =head1 DEPENDENCIES
 
-This module depends on L<Dist::Zilla|Dist::Zilla> version 4.102221 or greater,
+This module depends on L<Dist::Zilla|Dist::Zilla> version 6.012 or greater,
 L<Dist::Zilla::Plugin::Git|Dist::Zilla::Plugin::Git>, 
 L<Dist::Zilla::Plugin::Twitter|Dist::Zilla::Plugin::Twitter>, ...
 

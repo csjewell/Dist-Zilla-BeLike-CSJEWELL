@@ -52,32 +52,32 @@ sub ACTION_distmeta {
 END_CODE
 );
 
-
 my $builder = $class->new(
-    module_name              => 'Dist::Zilla::BeLike::CSJEWELL',
-    license                  => 'perl',
-    dist_author              => [ 'Curtis Jewell <CSJewell@cpan.org>' ],
-    dist_version_from        => 'lib/Dist/Zilla/BeLike/CSJEWELL.pm',
-    create_readme            => 1,
-    create_license           => 1,
-    create_makefile_pl       => 'small',
-    release_status           => 'testing',
-    configure_requires       => {
-        'Module::Build'      => '0.3614',
+    module_name        => 'Dist::Zilla::BeLike::CSJEWELL',
+    license            => 'perl',
+    dist_author        => ['Curtis Jewell <CSJewell@cpan.org>'],
+    dist_version_from  => 'lib/Dist/Zilla/BeLike/CSJEWELL.pm',
+    create_readme      => 1,
+    create_license     => 1,
+    create_makefile_pl => 'small',
+    release_status     => 'testing',
+    configure_requires => {
+        'Module::Build' => '0.3614',
     },
     requires => {
-        'perl'                                => '5.008003',
-        'Dist::Zilla'                         => '6.012',
-        'Dist::Zilla::Plugin::Git'            => '0.03',
-        'Dist::Zilla::Plugin::Twitter'        => '0.009',
-        'Module::Build'                       => '0.3614',
-        'Moose'                               => '1.09',
-        'autodie'                             => '2.10',
-        'Pod::Readme'                         => '0.10',
-        'Software::License'                   => '0.101620',
+        'perl'                          => '5.008003',
+        'Dist::Zilla'                   => '6.012',
+        'Dist::Zilla::Plugin::Git'      => '0.03',
+        'Dist::Zilla::Plugin::PerlTidy' => '0.21',
+        'Dist::Zilla::Plugin::Twitter'  => '0.009',
+        'Module::Build'                 => '0.3614',
+        'Moose'                         => '1.09',
+        'autodie'                       => '2.10',
+        'Pod::Readme'                   => '0.10',
+        'Software::License'             => '0.101620',
+
         # These are what the author tests require.
-        # Might as well have the prospective builder install
-        #  them now.
+        # Might as well have the prospective builder install them now.
         'Perl::MinimumVersion'                => '1.26',
         'Pod::Coverage::TrustPod'             => '0.01',
         'Pod::Coverage::Moose'                => '0.01',
@@ -85,7 +85,7 @@ my $builder = $class->new(
         'Test::Pod::Coverage'                 => '1.08',
         'Pod::Simple'                         => '3.14',
         'Test::Pod'                           => '1.44',
-        'Perl::Tidy'                          => '20090616',
+        'Perl::Tidy'                          => '20190601',
         'PPIx::Regexp'                        => '0',
         'PPIx::Utilities::Statement'          => '0',
         'Email::Address'                      => '0',
@@ -93,6 +93,7 @@ my $builder = $class->new(
         'Perl::Critic::More'                  => '0',
         'Perl::Critic'                        => '1.108',
         'Test::Perl::Critic'                  => '0',
+        'Test::DescribeMe'                    => '0',
         'Test::MinimumVersion'                => '0.101080',
         'Parse::CPAN::Meta'                   => '1.40',
         'Test::CPAN::Meta'                    => '0.17',
@@ -106,22 +107,22 @@ my $builder = $class->new(
         'Test::Portability::Files'            => '0.05',
     },
     build_requires => {
-        'Test::More'                          => '0.88',
-        'Test::UseAllModules'                 => '0.12',
+        'Test::More'          => '0.88',
+        'Test::UseAllModules' => '0.12',
     },
-    meta_merge     => {
+    meta_merge => {
         resources => {
-            homepage    => 'http://curtisjewell.website/',
-            bugtracker  => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Dist-Zilla-BeLike-CSJEWELL',
-            repository  => 'http://git.curtisjewell.website/Dist-Zilla-BeLike-CSJEWELL'
-        },
+            homepage   => 'http://curtisjewell.website/',
+            bugtracker => 'https://github.com/csjewell/Dist-Zilla-BeLike-CSJEWELL/issues',
+            repository => 'http://git.curtisjewell.website/Dist-Zilla-BeLike-CSJEWELL'
+	},
     },
     share_dir => {
         module => {
-            'Dist::Zilla::MintingProfile::CSJEWELL'  => 'share',
+            'Dist::Zilla::MintingProfile::CSJEWELL' => 'share',
         }
     },
-    add_to_cleanup      => [ 'Dist-Zilla-BeLike-CSJEWELL-*', ],
+    add_to_cleanup => [ 'Dist-Zilla-BeLike-CSJEWELL-*', ],
 );
 
 $builder->create_build_script();
