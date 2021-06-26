@@ -1,19 +1,30 @@
-package Dist::Zilla::PluginBundle::CSJEWELL;
+package Dist::Zilla::PluginBundle::Author::CSJEWELL;
 
-use 5.008003;
+use v5.10;
 use Moose;
+use Types::Standard qw(Bool ArrayRef Str);
 with 'Dist::Zilla::Role::PluginBundle::Easy';
+with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
 
-our $VERSION = '0.993';
+our $VERSION = '0.994';
 
 has fake_release => (
     is      => 'ro',
     isa     => 'Bool',
     lazy    => 1,
     default => sub {
-        exists $_[0]->payload->{'fake_release'}
-            ? $_[0]->payload->{'fake_release'}
-            : 1;
+          $ENV{'DZIL_NO_RELEASE'}                 ? $ENV{'DZIL_NO_RELEASE'}
+	: exists $_[0]->payload->{'fake_release'} ? $_[0]->payload->{'fake_release'}
+        :                                           1;
+    },
+);
+
+has perltidyrc => (
+    is      => 'ro',
+    #isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{'perltidyrc'} ? $_[0]->payload->{'perltidyrc'} : 'xt/settings/perltidy.txt';
     },
 );
 
@@ -22,32 +33,57 @@ has darkpan => (
     isa     => 'Bool',
     lazy    => 1,
     default => sub {
-        exists $_[0]->payload->{'darkpan'}
-            ? $_[0]->payload->{'darkpan'}
-            : 0;
+        exists $_[0]->payload->{'darkpan'} ? $_[0]->payload->{'darkpan'} : 0;
     },
 );
+
+has twitter => (
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+          $_[0]->fake_release                ? 0
+	: exists $_[0]->payload->{'twitter'} ? $_[0]->payload->{'twitter'}
+	:                                      0;
+    },
+);
+
+has exclusions => (
+    is      => 'ro',
+    isa     => 'ArrayRef[Str]',
+    lazy    => 1,
+    default => sub { exists $_[0]->payload->{'exclusions'} ? $_[0]->payload->{'exclusions'} : ['t/000-']; },
+);
+
+sub mvp_multivalue_args { qw(exclusions) }
 
 sub configure {
     my ($self) = @_;
 
-    my @plugins = qw(
-        CSJEWELL::BeforeBuild
-        GatherDir
-        ManifestSkip
-        CSJEWELL::VersionGetter
-        CSJEWELL::ModuleBuild
+    if ($self->fake_release) {
+        say '[@Author::CSJEWELL] WARNING! WARNING! WARNING! *** You are in fake_release mode!! ***';
+    }
 
-        RunExtraTests
-        ConfirmRelease
+    my @plugins = (
+        ['CSJEWELL::BeforeBuild'],
+        ['GatherDir'],
+        ['ManifestSkip'],
+        ['CSJEWELL::VersionGetter'],
+        ['CSJEWELL::ModuleBuild'],
+        ['PerlTidy::WithExclusions' => { perltidyrc => $self->perltidyrc, exclusions => $self->exclusions }],
+
+        ['ConfirmRelease'],
+        ['RunExtraTests'],
+
+        $self->fake_release ? (['FakeRelease']) : $self->darkpan ? (['CSJEWELL::UploadToDarkPAN']) : (['UploadToCPAN']),
+
+	['Git::Check'],
+	['Git::Commit'],
+	$self->fake_release ? ['Git::Tag'] : (),
+	$self->fake_release ? ['Git::Push', { push_to => 'origin github', }] : (),
+
+	$self->twitter ? ['Twitter', {tweet => 'Uploaded {{$DIST}} {{$VERSION}} to #CPAN - find it on your local mirror. {{$URL}} #perl'}] : (),
     );
-
-    push @plugins,
-        (
-          $self->fake_release() ? 'FakeRelease'
-        : $self->darkpan()      ? 'CSJEWELL::UploadToDarkPAN'
-        :                         'UploadToCPAN'
-        );
 
     $self->add_plugins(@plugins);
 
@@ -64,11 +100,11 @@ __END__
 
 =head1 NAME
 
-Dist::Zilla::PluginBundle::CSJEWELL - CSJEWELL's basic plugins to maintain and release CPAN dists
+Dist::Zilla::PluginBundle::Author::CSJEWELL - CSJEWELL's basic plugins to maintain and release CPAN dists
 
 =head1 VERSION
 
-This document describes Dist::Zilla::PluginBundle::CSJEWELL version 0.993.
+This document describes Dist::Zilla::PluginBundle::Author::CSJEWELL version 0.994.
 
 =head1 DESCRIPTION
 
@@ -141,7 +177,7 @@ L<Dist::Zilla::BeLike::CSJEWELL|Dist::Zilla::BeLike::CSJEWELL>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2010, Curtis Jewell C<< CSJewell@cpan.org >>.
+Copyright (c) 2010, 2021 Curtis Jewell C<< CSJewell@cpan.org >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself, either version
@@ -175,3 +211,4 @@ SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
 
 =cut
+

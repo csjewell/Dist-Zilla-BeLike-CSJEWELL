@@ -68,6 +68,7 @@ my $builder = $class->new(
         'perl'                          => '5.008003',
         'Dist::Zilla'                   => '6.012',
         'Dist::Zilla::Plugin::Git'      => '0.03',
+        'Dist::Zilla::Config::Slicer'   => '0.200',
         'Dist::Zilla::Plugin::PerlTidy' => '0.21',
         'Dist::Zilla::Plugin::Twitter'  => '0.009',
         'Module::Build'                 => '0.3614',

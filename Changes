@@ -1,5 +1,9 @@
 Revision history for Dist-Zilla-BeLike-CSJEWELL
 
+0.994  tbd (TRIAL)
+       - Describe the author tests with Test::DescribeMe
+       - Add automated perltidying to my arsenal
+
 0.993  Thu 24 Jun 2021 (TRIAL)
        - Update to Dist::Zilla 6
        - Git won the DVCS wars, giving in.

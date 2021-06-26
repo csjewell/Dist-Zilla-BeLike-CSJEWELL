@@ -29,7 +29,7 @@ Dist::Zilla::BeLike::CSJEWELL - Build a modern dist like CSJEWELL does it.
 
 This document describes Dist::Zilla::BeLike::CSJEWELL version 0.994.
 
-=begin readme
+=for readme continue
 
 =head1 INSTALLATION
 
@@ -49,8 +49,6 @@ Alternatively, to install with Module::Build, you can use the following commands
     ./Build
     ./Build test
     ./Build install
-
-=end readme
 
 =for readme stop
 
