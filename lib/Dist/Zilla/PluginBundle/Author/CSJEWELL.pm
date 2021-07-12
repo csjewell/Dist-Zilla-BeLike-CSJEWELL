@@ -60,11 +60,8 @@ sub mvp_multivalue_args { qw(exclusions) }
 sub configure {
     my ($self) = @_;
 
-    if ($self->fake_release) {
-        say '[@Author::CSJEWELL] WARNING! WARNING! WARNING! *** You are in fake_release mode!! ***';
-    }
-
     my @plugins = (
+	$self->fake_release ? ['CSJEWELL::FakeReleaseAnnounce'] : (),
         ['CSJEWELL::BeforeBuild'],
         ['GatherDir'],
         ['ManifestSkip'],
