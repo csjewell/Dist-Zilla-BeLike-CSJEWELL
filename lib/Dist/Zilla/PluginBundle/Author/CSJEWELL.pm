@@ -62,6 +62,7 @@ sub configure {
 
     my @plugins = (
 	$self->fake_release ? ['CSJEWELL::FakeReleaseAnnounce'] : (),
+        ['CSJEWELL::ReleaseStatusFromMetaJSON'],
         ['CSJEWELL::BeforeBuild'],
         ['GatherDir'],
         ['ManifestSkip'],
