@@ -7,9 +7,9 @@ with 'Dist::Zilla::Role::BeforeBuild';
 our $VERSION = '0.994';
 
 sub before_build {
-    my ($self) = @_
+    my ($self) = @_;
 
-    $self->log_debug([ 'WARNING! WARNING! WARNING! *** You are in fake_release mode!! ***' ]);
+    $self->log([ 'WARNING! WARNING! WARNING! *** You are in fake_release mode!! ***' ]);
     
     return 1;
 } ## end sub before_build

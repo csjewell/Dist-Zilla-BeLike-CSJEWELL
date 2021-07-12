@@ -3,6 +3,7 @@ package Dist::Zilla::Plugin::PerlTidy::WithExclusions;
 our $VERSION = v0.001;
 
 use v5.10;
+use Perl::Tidy qw();
 use Moose;
 with(
     'Dist::Zilla::Role::FileMunger',
@@ -40,6 +41,7 @@ sub _munge_perl {
     my ( $self, $file ) = @_;
 
     return if ref($file) eq 'Dist::Zilla::File::FromCode';
+    return if $file->name && $file->name =~ m{^blib/};
     return
         if $file->name
         and scalar grep { $file->name =~ /$_/ } @{ $self->exclusions };
@@ -50,22 +52,28 @@ sub _munge_perl {
             $perltidyrc = $self->perltidyrc;
         } else {
             $self->log_fatal(
-                [ "specified perltidyrc is not readable: %s", $perltidyrc ] );
+                [ 'specified perltidyrc is not readable: %s', $perltidyrc ] );
         }
     }
 
     # make Perl::Tidy happy
     local @ARGV = ();
 
+    $self->log_debug([ 'Perltidying %s', $file->name, ]);
+
     my $source = $file->content;
-    my $destination;
-    require Perl::Tidy;
+    my ($destination, $errors);
     Perl::Tidy::perltidy(
         source      => \$source,
         destination => \$destination,
+	stderr      => \$errors,
+	argv        => ['--standard-error-output'],
         ( $perltidyrc ? ( perltidyrc => $perltidyrc ) : () ),
     );
 
+    $self->log([ 'Errors from perltidying %s: %s', $file->name, $errors, ])
+        if $errors;
+    
     $file->content($destination);
 }
 

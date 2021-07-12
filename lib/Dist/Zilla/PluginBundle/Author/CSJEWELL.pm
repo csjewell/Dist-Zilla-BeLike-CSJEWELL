@@ -77,8 +77,8 @@ sub configure {
 
 	['Git::Check'],
 	['Git::Commit'],
-	$self->fake_release ? ['Git::Tag'] : (),
-	$self->fake_release ? ['Git::Push', { push_to => 'origin github', }] : (),
+	$self->fake_release ? () : ['Git::Tag'],
+	$self->fake_release ? () : ['Git::Push', { push_to => 'origin github', }],
 
 	$self->twitter ? ['Twitter', {tweet => 'Uploaded {{$DIST}} {{$VERSION}} to #CPAN - find it on your local mirror. {{$URL}} #perl'}] : (),
     );

@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::UploadToCPAN;
 
-our $VERSION = '0.994'
+our $VERSION = '0.994';
 
 use Moose;
 with 'Dist::Zilla::Role::Releaser';
