@@ -1,8 +1,14 @@
 Revision history for Dist-Zilla-BeLike-CSJEWELL
 
-0.994  tbd (TRIAL)
+0.995  tbd (TRIAL)
+       - Get git pushing correct
+       # Extract out the ReleaseStatusFromMetaJSON plugin. (TODO)
+       # Add CONTRIBUTING (TODO)
+
+0.994  Tue 13 Jul 2021 (TRIAL)
        - Describe the author tests with Test::DescribeMe
        - Add automated perltidying to my arsenal
+       - Add a few more small plugins.
 
 0.993  Thu 24 Jun 2021 (TRIAL)
        - Update to Dist::Zilla 6
