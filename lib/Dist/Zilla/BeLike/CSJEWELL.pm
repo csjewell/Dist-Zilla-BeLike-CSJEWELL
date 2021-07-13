@@ -4,7 +4,7 @@ use 5.008003;
 use warnings;
 use strict;
 
-our $VERSION = '0.994';
+our $VERSION = '0.995';
 
 # Documentation module only.
 
@@ -15,7 +15,7 @@ __END__
 
 =begin readme text
 
-Dist::Zilla::BeLike::CSJEWELL version 0.994
+Dist::Zilla::BeLike::CSJEWELL version 0.995
 
 =end readme
 
@@ -27,7 +27,7 @@ Dist::Zilla::BeLike::CSJEWELL - Build a modern dist like CSJEWELL does it.
 
 =head1 VERSION
 
-This document describes Dist::Zilla::BeLike::CSJEWELL version 0.994.
+This document describes Dist::Zilla::BeLike::CSJEWELL version 0.995.
 
 =for readme continue
 

@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::CSJEWELL::ReleaseStatusFromMetaJSON;
 
-our $VERSION = v0.001;
+our $VERSION = '0.995';
 
 use v5.10;
 use JSON::MaybeXS qw();
@@ -38,11 +38,17 @@ __END__
 
 =head1 NAME
 
-Dist::Zilla::Plugin::CSJEWELL::JSONReleaseStatus - Set release status from META.json
+Dist::Zilla::Plugin::ReleaseStatus::FromMetaJSON - Set release status from META.json
 
 =head1 VERSION
 
-version 0.994
+version 0.995
+
+=head1 DESCRIPTION
+
+Retrieves the release status of the distribution from an already-generated META.json file.
+
+This is useful for people that want to keep their repository 'as close to released as possible'
 
 =for Pod::Coverage provide_release_status
 

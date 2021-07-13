@@ -6,7 +6,7 @@ use Types::Standard qw(Bool ArrayRef Str);
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
 
-our $VERSION = '0.994';
+our $VERSION = '0.995';
 
 has fake_release => (
     is      => 'ro',
@@ -62,7 +62,7 @@ sub configure {
 
     my @plugins = (
 	$self->fake_release ? ['CSJEWELL::FakeReleaseAnnounce'] : (),
-        ['CSJEWELL::ReleaseStatusFromMetaJSON'],
+        ['ReleaseStatus::FromMetaJSON'],
         ['CSJEWELL::BeforeBuild'],
         ['GatherDir'],
         ['ManifestSkip'],
@@ -78,7 +78,7 @@ sub configure {
 	['Git::Check'],
 	['Git::Commit'],
 	$self->fake_release ? () : ['Git::Tag'],
-	$self->fake_release ? () : ['Git::Push', { push_to => 'origin github', }],
+	$self->fake_release ? () : ['Git::Push', { push_to => ['origin', 'github',], }],
 
 	$self->twitter ? ['Twitter', {
             tweet         => 'Uploaded {{$DIST}} {{$VERSION}} to #CPAN - find it on your local mirror. {{$URL}} #perl',
