@@ -21,7 +21,7 @@ has fake_release => (
 
 has perltidyrc => (
     is      => 'ro',
-    #isa     => 'Bool',
+    isa     => 'Str',
     lazy    => 1,
     default => sub {
         exists $_[0]->payload->{'perltidyrc'} ? $_[0]->payload->{'perltidyrc'} : 'xt/settings/perltidy.txt';
@@ -80,7 +80,10 @@ sub configure {
 	$self->fake_release ? () : ['Git::Tag'],
 	$self->fake_release ? () : ['Git::Push', { push_to => 'origin github', }],
 
-	$self->twitter ? ['Twitter', {tweet => 'Uploaded {{$DIST}} {{$VERSION}} to #CPAN - find it on your local mirror. {{$URL}} #perl'}] : (),
+	$self->twitter ? ['Twitter', {
+            tweet         => 'Uploaded {{$DIST}} {{$VERSION}} to #CPAN - find it on your local mirror. {{$URL}} #perl',
+            url_shortener => '',
+        }] : (),
     );
 
     $self->add_plugins(@plugins);
