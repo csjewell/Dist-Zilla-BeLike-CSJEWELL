@@ -73,7 +73,7 @@ The configuration questions are asked for in the C<dzil configure_CSJEWELL> comm
 
 =head1 DEPENDENCIES
 
-This module depends on L<Dist::Zilla|Dist::Zilla> version 6.012 or greater,
+This module depends on L<Dist::Zilla|Dist::Zilla> 6.012 or greater,
 L<Dist::Zilla::Plugin::Git|Dist::Zilla::Plugin::Git>, 
 L<Dist::Zilla::Plugin::Twitter|Dist::Zilla::Plugin::Twitter>, ...
 

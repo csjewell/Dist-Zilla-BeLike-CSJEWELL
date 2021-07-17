@@ -68,7 +68,8 @@ sub configure {
         ['ManifestSkip'],
         ['CSJEWELL::VersionGetter'],
         ['CSJEWELL::ModuleBuild'],
-        ['PerlTidy::WithExclusions' => { perltidyrc => $self->perltidyrc, exclusions => $self->exclusions }],
+        ['CSJEWELL::VersionCheck'],
+	['PerlTidy::WithExclusions' => { perltidyrc => $self->perltidyrc, exclusions => $self->exclusions }],
 
         ['ConfirmRelease'],
         ['RunExtraTests'],
@@ -105,7 +106,7 @@ Dist::Zilla::PluginBundle::Author::CSJEWELL - CSJEWELL's basic plugins to mainta
 
 =head1 VERSION
 
-This document describes Dist::Zilla::PluginBundle::Author::CSJEWELL version 0.994.
+This document describes Dist::Zilla::PluginBundle::Author::CSJEWELL version 0.995.
 
 =head1 DESCRIPTION
 

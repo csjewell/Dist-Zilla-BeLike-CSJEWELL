@@ -1,31 +1,114 @@
 package Dist::Zilla::Plugin::CSJEWELL::VersionCheck;
 
-use 5.008003;
+use v5.10.1;
+
 use Moose;
-with 'Dist::Zilla::Role::FileMunger', 'Dist::Zilla::Role::Git::Repo';
+
+use ExtUtils::MakeMaker qw();
+use IO::String          qw();
+use Pod::Text           qw();
+
+with
+    'Dist::Zilla::Role::FileMunger',
+    'Dist::Zilla::Role::Git::Repo',
+    'Dist::Zilla::Role::FileFinderUser' => {
+        default_finders => [ ':InstallModules' ],
+    }
+;
 
 our $VERSION = '0.995';
 
-sub munge_file {
+has _git_version => (
+    is      => 'ro',
+    lazy    => 1,
+    builder => '_build_git_version',
+);
+
+sub _build_git_version {
     my ($self) = @_;
 
-    $current_tag = $self->git->describe({ abbrev => ' 0', }); // do {
-        $self->git->rev_list('HEAD');
+    my ($current_tag) = $self->git->describe({ abbrev => ' 0', });
+    if (!defined($current_tag)) {
+        ($current_tag) = $self->git->rev_list('HEAD');
 	# TODO: Check to see whether this needs split. We want [-1].
     };
 
-    $self->git->diff('name_only', $current_tag, 'HEAD');
-    # Check this output, as well.
+    $current_tag;
+}
+
+has _files_list => (
+    is      => 'ro',
+    lazy    => 1,
+    builder => '_build_files_list',
+);
+
+sub _build_files_list {
+    my ($self) = @_;
+
+    my $current_tag = $self->_git_version;
+
+    my (@files_list) = $self->git->diff('--name-only', "$current_tag..HEAD");
+    push @files_list, ($self->git->diff('--name-only'));
+
+    \@files_list;
+}
+
+sub force { 0 } # TODO: Implement as arg.
+
+sub munge_files {
+    my ($self) = @_;
+
+    $self->log(['Checking files updated since %s', $self->_git_version]);
+
+    my %changed_files = map { $_ => 1 } @{ $self->_files_list }; 
+    my @files_needing_updated;
+
+    foreach my $file (@{ $self->found_files }) {
+        next unless $self->force || $changed_files{ $file->name };
+    	my $resp = $self->check_file($file);
+	if ($resp) {
+	    push @files_needing_updated, $file->name . ": $resp";
+	}
+    }
+
+    if (scalar @files_needing_updated) {
+        $self->log_fatal(['Need to update files to version %s: %s', $self->zilla->version, join("\n    ", '', @files_needing_updated)]);
+    }
+
+    return 1;
+}
+
+sub check_file {
+    my ($self, $file) = @_;
 
     my $current_version = $self->zilla->version;
 
+    my $version = MM->parse_version($file->name);
+    if ($current_version ne $version) {
+        return "\$VERSION found was not $current_version";
+    }
+
+    my $pod    = '';
+    my $pod_fh = IO::String->new($pod);
+    my $parser = Pod::Text->new();
+    $parser->output_fh($pod_fh);
+    $parser->parse_string_document($file->content);
+
+    #pos($pod) = 0;
+    while ($pod =~ /(version\s+[0-9.]+)/g) {
+        my $found = $1;
+	$found =~ s/[.]\z//;
+	$found =~ s/\s+/ /;
+	next if $found eq 'version 5.8.1'; # Bypass license text.
+        return qq{Found "$found" in POD that needs to be "version $current_version"}
+	    unless $found eq "version $current_version";
+    }
+
     # Check only .pm files within the lib directory, plus specific inclusions.
     # Filter out 'v' from the tab, unless the version includes it.
-    # Check for a $VERSION = line that is not equal to the current version.
-    # Check for 'version X' that does not include the current version.
 
-    return 1;
-} ## end sub before_build
+    return 0;
+} ## end sub munge_file
 
 __PACKAGE__->meta->make_immutable;
 no Moose;

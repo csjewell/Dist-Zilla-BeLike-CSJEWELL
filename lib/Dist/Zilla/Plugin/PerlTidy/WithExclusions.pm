@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::PerlTidy::WithExclusions;
 
-our $VERSION = v0.001;
+our $VERSION = '0.995';
 
 use v5.10;
 use Perl::Tidy qw();
@@ -94,7 +94,7 @@ Dist::Zilla::Plugin::PerlTidy::WithExceptions - PerlTidy in Dist::Zilla
 
 =head1 VERSION
 
-version 0.001
+version 0.995
 
 =head1 METHODS
 

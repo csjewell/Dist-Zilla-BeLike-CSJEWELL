@@ -5,7 +5,7 @@ use Moose;
 use ExtUtils::MakeMaker;
 with 'Dist::Zilla::Role::VersionProvider';
 
-our $VERSION = '0.990';
+our $VERSION = '0.995';
 
 sub provide_version {
     my ($self)  = @_;
@@ -31,7 +31,7 @@ Dist::Zilla::Plugin::CSJEWELL::VersionGetter - Grab the version from the main fi
 
 =head1 VERSION
 
-This document describes Dist::Zilla::Plugin::CSJEWELL::VersionGetter version 0.993.
+This document describes Dist::Zilla::Plugin::CSJEWELL::VersionGetter version 0.995.
 
 =head1 DESCRIPTION
 

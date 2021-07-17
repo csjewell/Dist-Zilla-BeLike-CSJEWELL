@@ -1,6 +1,6 @@
-package Dist::Zilla::Plugin::UploadToCPAN;
+package Dist::Zilla::Plugin::UploadToDarkPAN;
 
-our $VERSION = '0.994';
+our $VERSION = '0.995';
 
 use Moose;
 with 'Dist::Zilla::Role::Releaser';
@@ -8,21 +8,36 @@ with 'Dist::Zilla::Role::Releaser';
 use namespace::autoclean;
 
 has ssh_username => (
-    is      => 'ro',
+    is       => 'ro',
+    required => 1,
 );
 
 has copy_destination => (
-    is      => 'ro',
+    is       => 'ro',
+    required => 1,
 );
 
 has post_copy_command => (
-    is      => 'ro',
+    is => 'ro',
 );
 
 sub release {
-  my ($self, $archive) = @_;
+    my ($self, $archive) = @_;
 
-  $self->uploader->upload_file("$archive");
+    $self->uploader->upload_file("$archive");
+
+    my @command = ('scp', $archive, join(':', $self->ssh_username, $ssh->copy_destination));
+
+    $self->log([join ' ', 'Running command: ', @command]);
+    my $ret = system @command;
+    $ret == 0 or $self->log_fatal(['The command returned %i', $ret]);
+
+    if ($self->post_copy_command) {
+        @command = ('ssh', $self->ssh_username, $ssh->post_copy_command);
+    	$self->log([join ' ', 'Running post-copy command: ', @command]);
+	$ret = system @command;
+    	$ret == 0 or $self->log_fatal(['The command returned %i', $ret]);
+    }
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -41,7 +56,7 @@ Dist::Zilla::Plugin::CSJEWELL::UploadToDPAN - upload the dist to CPAN
 
 =head1 VERSION
 
-version 0.994
+version 0.995
 
 =head1 SYNOPSIS
 

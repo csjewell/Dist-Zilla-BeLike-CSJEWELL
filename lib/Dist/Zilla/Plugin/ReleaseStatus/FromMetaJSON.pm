@@ -1,4 +1,4 @@
-package Dist::Zilla::Plugin::CSJEWELL::ReleaseStatusFromMetaJSON;
+package Dist::Zilla::Plugin::ReleaseStatus::FromMetaJSON;
 
 our $VERSION = '0.995';
 
